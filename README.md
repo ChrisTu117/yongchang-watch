@@ -21,7 +21,7 @@
 |---|---|
 | Windows 10/11（64 位） | 下载 `YongchangWatch-<版本>-win64.zip`，解压后双击 `YongchangWatch.exe`，不用安装〔C7〕〔M1〕 |
 | 装了 LÖVE 11.5 的电脑 | 在仓库目录运行 `love .`，或运行 `YongchangWatch-<版本>.love`〔C5〕 |
-| Dora SSR 1.10（Dora 平台兼容版本） | 运行仓库根目录的 `init.lua`：先打开 Dora，再执行 `Dora cli run -p <仓库目录>`（或解压 `YongchangWatch-<版本>-dora.zip` 后对解压出的目录执行同一命令）。`init.lua` 用 `LoveNode("main.lua")` 加载同一份 LÖVE 项目，并用 2D 摄像机等比适配屏幕。已在 Dora SSR 1.10.2 Linux 版上实际运行〔C18〕；Windows 版待确认〔M2〕 |
+| Dora SSR 1.10（Dora 平台兼容版本） | 运行仓库根目录的 `init.lua`：先打开 Dora，再执行 `Dora --asset <Dora 资源目录> cli run -p <仓库目录>`（或解压 `YongchangWatch-<版本>-dora.zip` 后对解压出的目录执行同一命令）。`<Dora 资源目录>` 是含 `Script/Dev/cli.lua` 的目录，Windows 版就是 `Dora.exe` 所在的文件夹。`init.lua` 用 `LoveNode("main.lua")` 加载同一份 LÖVE 项目，并用 2D 摄像机等比适配屏幕。已在 Dora SSR 1.10.2 Linux 版上实际运行〔C18〕；Windows 版待确认〔M2〕 |
 
 操作：鼠标照亮与点击；`1` `2` `3` 切换弓手、鸟铳、烽火；`F` 孔明灯；空格暂停；`Esc` 菜单（可返回标题或退出游戏）〔C8〕；`M` 静音。
 
