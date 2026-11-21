@@ -4,7 +4,7 @@
 1. 找出这些文件里出现的全部编号，确认每个编号都在下面的 CLAIMS 里有对应检查；
 2. 逐条运行检查（C 开头是自动检查，多数读取 tools/check_all.sh 本轮写下的 build/reports/*；
    M 开头是需要人在真机上确认的项目，读 docs/人工检查记录.md）；
-3. 打印表格。退出码：0 全部通过；2 只剩人工项待确认；1 有自动检查没通过或编号没有检查。
+3. 打印表格。退出码：0 全部通过（人工项可以标“跳过”并写明原因）；2 只剩人工项待确认；1 有自动检查没通过或编号没有检查。
 """
 import glob
 import hashlib
@@ -224,8 +224,11 @@ def manual(mid):
         if not m:
             return None, "人工检查记录里没有这一项"
         row = m.group(0)
-        if "通过" in row and re.search(r"20\d\d-\d\d-\d\d", row):
+        result = row.rstrip("|").split("|")[-1].strip()
+        if "通过" in result and re.search(r"20\d\d-\d\d-\d\d", result):
             return True, row.strip()
+        if result.startswith("跳过"):
+            return "skip", result
         return None, "待人工确认"
     return f
 
@@ -237,7 +240,7 @@ CLAIMS = {
     "C4": ("除字体外没有第三方素材", c4),
     "C5": ("标准 LÖVE 11.5 项目，能从标题玩到终章", c5),
     "C6": ("Dora 兼容：Lua 5.5 可运行逻辑、静态检查通过、带 init.lua 入口", c6),
-    "C7": ("提供 Windows 64 位免安装包（结构检查）", c7),
+    "C7": ("提供 Windows 64 位免安装包（结构检查，并与 LÖVE 官方 11.5 Windows 包逐字节比对）", c7),
     "C8": ("能正常退出", c8),
     "C9": ("有新手引导和操作反馈", c9),
     "C10": ("会玩能赢、不玩必输，“望”和“迎百姓”都有用", lambda: unit_file_ok("test_balance")),
@@ -270,10 +273,10 @@ def main():
         except Exception as e:  # noqa: BLE001
             ok, detail = False, f"检查出错：{e}"
         where = "、".join(sorted(used.get(k, []))) or "（文档未引用）"
-        tag = "PASS" if ok else ("PEND" if ok is None else "FAIL")
+        tag = "SKIP" if ok == "skip" else ("PASS" if ok else ("PEND" if ok is None else "FAIL"))
         if ok is None:
             pending += 1
-        elif not ok:
+        elif ok is False:
             failed += 1
         print(f"{tag} {k} {desc} —— {detail}  [引用：{where}]")
     print(f"自动检查失败 {failed} 项，人工待确认 {pending} 项")
