@@ -31,4 +31,6 @@
 | 第三方 | `assets/fonts/ycw-serif.ttf` | 游戏字体：Noto Serif CJK SC Bold 的子集（只保留游戏用到的字，轮廓转为 TrueType） | `tools/build_font.py` 从 Noto Serif CJK（© 2017-2024 Adobe，https://github.com/notofonts/noto-cjk ）生成，已修改 | SIL Open Font License 1.1（https://openfontlicense.org ） |
 | 第三方 | `assets/fonts/OFL.txt` | 上面字体的许可证全文与版权声明 | 原样附带 | SIL Open Font License 1.1 |
 
+`docs/screenshots/` 里的截图和封面由 `tools/run_autotest.sh` 在自动试玩时截取，属于原创画面，以 CC BY 4.0 授权。
+
 Windows 包里另有 LÖVE 11.5 官方运行库（`love.dll`、`SDL2.dll` 等，zlib 许可，许可证随包附带为 `LOVE-license.txt`），不在本仓库中。

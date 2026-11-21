@@ -114,7 +114,7 @@ def c4():
 
 
 def c5():
-    t = read("build/reports/autotest.txt")
+    t = read("build/reports/autotest-result.txt")
     ok = "love_version=LOVE 11.5" in t and "exit_code=0" in t and "AUTOTEST PASS" in t
     m = re.search(r"checks (\d+)/(\d+) passed", t)
     return ok, (f"LÖVE 11.5 端到端测试通过（{m.group(0) if m else ''}）" if ok else "端到端测试未通过或不是 LÖVE 11.5")
@@ -132,13 +132,13 @@ def c7():
 
 
 def c8():
-    t = read("build/reports/autotest.txt")
+    t = read("build/reports/autotest-result.txt")
     ok = "exit_via=menu" in t and "exit_code=0" in t
     return ok, "从标题菜单“退出游戏”正常退出，退出码 0" if ok else "没有走菜单正常退出"
 
 
 def c9():
-    t = read("build/reports/autotest.txt")
+    t = read("build/reports/autotest-result.txt")
     need = ["教学 1：移动鼠标照向海面", "教学 2：点击敌台安排弓手", "教学 3：点击城门打开", "教学 3：迎入百姓",
             "空格暂停", "Esc 打开菜单"]
     miss = [n for n in need if ("PASS " + n) not in t]
