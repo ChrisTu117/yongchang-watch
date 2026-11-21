@@ -22,7 +22,7 @@ T.case("UTF-8 拆字", function()
   T.eq(c[1], "天"); T.eq(c[3], "A"); T.eq(c[4], "平")
 end)
 
-T.case("折行：中文逐字断，标点不到行首，英文不拆", function()
+T.case("折行：中文逐字断，句读不到行首，左括号不留行末，英文不拆", function()
   local m = function(s) return #U.chars(s) end
   local lines = U.wrap("一二三四五，六七", 5, m)
   T.eq(lines[1], "一二三四五，")
@@ -32,6 +32,12 @@ T.case("折行：中文逐字断，标点不到行首，英文不拆", function(
   T.eq(lines[2], "cdef")
   lines = U.wrap("第一段\n第二段", 10, m)
   T.eq(#lines, 2)
+  -- 左括号不留在行末
+  lines = U.wrap("一二三四《五六》", 5, m)
+  T.eq(lines[1], "一二三四")
+  T.eq(lines[2], "《五六》")
+  lines = U.wrap("（甲）乙", 10, m)
+  T.eq(lines[1], "（甲）乙")
 end)
 
 T.case("等距重采样", function()

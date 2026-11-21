@@ -1,7 +1,7 @@
 # 素材清单与授权
 
 本作品的代码（`*.lua`、`tools/` 里的脚本）以 **AGPL-3.0** 授权，全文见 `LICENSE`。
-团队原创的非代码素材（音效、音乐）以 **CC BY 4.0** 授权，全文见 `LICENSE-ASSETS`，许可证链接：https://creativecommons.org/licenses/by/4.0/ 。署名方式：“《永昌守望》制作组，2026 开源游戏开发大赛”。如修改，请注明修改内容。
+团队原创的非代码素材（音效、音乐）以 **CC BY 4.0** 授权，全文见 `LICENSE-ASSETS`，许可证链接：https://creativecommons.org/licenses/by/4.0/ 。署名方式：“《永昌守望》，什么都不会（ChrisTu117），2026 开源游戏开发大赛”。如修改，请注明修改内容。
 
 画面全部由代码实时绘制（`src/scenes/*.lua` 里的几何图形），仓库里没有图片素材文件。绘制画面的代码属于代码，以 AGPL-3.0 授权；游戏运行时画出来的画面图像（`docs/screenshots/` 里的截图、封面等）作为美术成果，以 CC BY 4.0 授权。
 

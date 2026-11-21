@@ -60,21 +60,26 @@ function U.chars(s)
   return out
 end
 
--- 按像素宽度折行。measure(str) 返回宽度。中文逐字可断，英文单词和数字不拆，行首不放中文标点。
+-- 按像素宽度折行。measure(str) 返回宽度。中文逐字可断，英文单词和数字不拆；
+-- 行首不放句读和右括号，行末不放左括号（左括号和后面的字连在一起）。
 local CLOSERS = { ["，"] = true, ["。"] = true, ["、"] = true, ["；"] = true, ["："] = true,
   ["！"] = true, ["？"] = true, ["）"] = true, ["》"] = true, ["」"] = true, ["』"] = true, ["”"] = true }
+local OPENERS = { ["（"] = true, ["《"] = true, ["「"] = true, ["『"] = true, ["“"] = true,
+  ["【"] = true, ["〔"] = true }
 
 local function tokens(para)
-  local out, word = {}, ""
+  local out, word, open = {}, "", ""
+  local function push(t) out[#out + 1] = open .. t; open = "" end
   for _, ch in ipairs(U.chars(para)) do
     if #ch == 1 and ch ~= " " then
       word = word .. ch
     else
-      if word ~= "" then out[#out + 1] = word; word = "" end
-      out[#out + 1] = ch
+      if word ~= "" then push(word); word = "" end
+      if OPENERS[ch] then open = open .. ch else push(ch) end
     end
   end
-  if word ~= "" then out[#out + 1] = word end
+  if word ~= "" then push(word) end
+  if open ~= "" then out[#out + 1] = open end
   return out
 end
 
