@@ -236,7 +236,8 @@ def manual(mid):
             return None, "人工检查记录里没有这一项"
         row = m.group(0)
         result = row.rstrip("|").split("|")[-1].strip()
-        if "通过" in result and re.search(r"20\d\d-\d\d-\d\d", result):
+        # 只认以“通过”开头的结果，避免“未通过 2026-…”被算作通过
+        if result.startswith("通过") and re.search(r"20\d\d-\d\d-\d\d", result):
             return True, row.strip()
         if result.startswith("跳过"):
             return "skip", result
