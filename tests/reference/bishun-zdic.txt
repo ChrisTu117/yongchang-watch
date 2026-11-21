@@ -1,0 +1,7 @@
+# 笔顺编号参考（独立来源，不来自本项目代码）
+# 来源：汉典 zdic.net，2026-11-21 抓取。编号含义：1 横，2 竖，3 撇，4 点（含捺），5 折。
+# URL：https://www.zdic.net/hans/天  https://www.zdic.net/hans/下  https://www.zdic.net/hans/太  https://www.zdic.net/hans/平
+天 1134
+下 124
+太 1344
+平 14312
