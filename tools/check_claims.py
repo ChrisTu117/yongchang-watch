@@ -217,6 +217,17 @@ def c17():
     return (not bad), ("中文说明里的数值与代码一致" if not bad else "不一致：" + "，".join(bad))
 
 
+def c18():
+    t = read("build/reports/dora_runtime.status").strip()
+    if t.startswith("SKIP"):
+        return "skip", t
+    r = read("build/reports/dora_runtime-result.txt")
+    m = re.search(r"dora_version=(.*)", r)
+    n = len(re.findall(r"^PASS ", r, re.M))
+    ok = t.startswith("PASS") and "DORA RUNTIME PASS" in r
+    return ok, f"Dora {m.group(1) if m else '?'}：{n} 项通过" if ok else (t or "本轮没有运行")
+
+
 def manual(mid):
     def f():
         t = read("docs/人工检查记录.md")
@@ -251,8 +262,9 @@ CLAIMS = {
     "C15": ("代码从主题公布后开始写", c15),
     "C16": ("规则与地图：四门、四水门、十二敌台、东门瓮城；民力只来自百姓和屯田", lambda: unit_file_ok("test_world")),
     "C17": ("中文说明里的数值与代码一致", c17),
+    "C18": ("在 Dora SSR 1.10 Linux 版实际运行：载入、鼠标键盘操作、菜单退出，日志无报错", c18),
     "M1": ("Windows 10/11 真机运行", manual("M1")),
-    "M2": ("Dora SSR 1.10 真机运行", manual("M2")),
+    "M2": ("Windows 上的 Dora SSR 1.10 运行", manual("M2")),
     "M3": ("演示视频不超过 5 分钟，B 站带「2026 开源游戏开发大赛」标签", manual("M3")),
 }
 

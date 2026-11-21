@@ -11,7 +11,7 @@ local Bot = require("src.sim.bot")
 local World = require("src.sim.world")
 
 local AT = { checks = {}, scenes = {}, frames = 0, real = 0, speed = 6, failed = false }
-local App
+local App, Input
 local co
 
 local function check(name, ok, detail)
@@ -165,10 +165,41 @@ local function traceChar(ch, testWrong)
   click(sc.nextBtn.x + 10, sc.nextBtn.y + 10)
 end
 
+-- Dora 的 LoveNode 把鼠标点击作为触摸回调送来；这里走真正的输入转接模块 src/input.lua
+local function touchClick(id, x, y)
+  local sx, sy = G.toScreen(x, y)
+  Input.touchpressed(id, sx, sy)
+  step()
+  Input.touchreleased(id, sx, sy)
+  step()
+end
+
+local function inputChecks()
+  local title = App.scene
+  local help = title:button("help")
+  touchClick("t1", help.x + help.w / 2, help.y + help.h / 2)
+  check("Dora 式触摸点击：进入操作说明", App.sceneName == "help")
+  local back = App.scene.back
+  touchClick("t2", back.x + back.w / 2, back.y + back.h / 2)
+  check("Dora 式触摸点击：返回标题", App.sceneName == "title")
+  -- 同一次点击被鼠标和触摸两条路各送一次时，只处理一次；触摸屏的 istouch 鼠标回调被忽略
+  local count, orig = 0, App.mousepressed
+  App.mousepressed = function(...) count = count + 1 end
+  local sx, sy = G.toScreen(40, 40)
+  Input.mousepressed(sx, sy, 1, false)
+  Input.touchpressed("t3", sx, sy)
+  Input.touchreleased("t3", sx, sy)
+  Input.mousepressed(sx + 100, sy, 1, true)
+  App.mousepressed = orig
+  check("鼠标与触摸重复送来的同一次点击只处理一次", count == 1, "处理了 " .. count .. " 次")
+  wait(0.2)
+end
+
 local function script()
   waitFor(function() return App.sceneName == "title" end, 5, "标题")
   wait(0.5)
   shot("01-title")
+  inputChecks()
   clickButton(App.scene.buttons, "start")
   passStory("02-story")
   playNight(1, true)
@@ -195,8 +226,8 @@ local function script()
   clickButton(App.scene.buttons, "quit")         -- 从标题菜单正常退出
 end
 
-function AT.start(app)
-  App = app
+function AT.start(app, _, input)
+  App, Input = app, input
   AT.shots = {}
   love.filesystem.createDirectory("autotest")
   App.onScene = function(name) AT.scenes[#AT.scenes + 1] = name end

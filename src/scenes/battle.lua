@@ -113,6 +113,7 @@ function Battle:handleEvents()
       self:float("屯田 +1 民力", MAP.center.x, MAP.center.y - 26, G.C.green, 12)
     elseif ty == "tut" then
       A.play("tok", 0.6)
+      print("[永昌守望] tutorial step " .. U.int(e.step))
     elseif ty == "won" then
       A.play("gong", 0.7)
     elseif ty == "lost" then
@@ -153,6 +154,7 @@ function Battle:showResult()
   local won = w.state == "won"
   local stars = w:stars()
   if won then self.app.record(self.levelIndex, stars) end
+  print("[永昌守望] night " .. U.int(self.levelIndex) .. (won and " won" or " lost"))
   local r = { won = won, stars = stars, buttons = {} }
   if won then
     r.buttons[1] = { id = "dragon", label = "舞龙显字：「" .. self.level.char .. "」", x = 380, y = 380, w = 200, h = 40 }

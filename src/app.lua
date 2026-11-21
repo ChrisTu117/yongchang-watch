@@ -43,6 +43,7 @@ function App.go(name, params)
   local scene = mod.new(App, params or {})
   App.scene = scene
   App.sceneName = name
+  print("[永昌守望] scene: " .. name)
   if App.onScene then App.onScene(name, scene) end
 end
 

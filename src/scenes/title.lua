@@ -72,11 +72,14 @@ function Title:draw()
   end
   -- 孔明灯
   for _, l in ipairs(self.lanterns) do
+    -- 画面外的不画（Dora 的 LoveNode 不按 setScissor 裁剪画面外的内容）
+    if l.y > 552 then goto skip end
     local x = l.x + math.sin(self.t + l.sw) * 6
     love.graphics.setColor(1, 0.6, 0.25, 0.25)
     love.graphics.circle("fill", x, l.y, 10)
     love.graphics.setColor(1, 0.72, 0.35, 0.9)
     love.graphics.rectangle("fill", x - 4, l.y - 6, 8, 11, 2, 2)
+    ::skip::
   end
   G.text("永昌守望", 480, 92, 76, G.C.gold, "center")
   G.text("守 · 望", 480, 190, 26, G.C.ink, "center")
