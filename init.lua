@@ -32,3 +32,11 @@ fit()
 Director.entry:onAppChange(function(settingName)
   if settingName == "Size" then fit() end
 end)
+
+-- Windows 和 macOS 版 Dora 启动后显示内置 Web IDE；IDE 盖着窗口时引擎跳过绘制，逻辑和声音照常运行
+-- （Dora 1.10.2 源码 Director::doRender）。从 IDE 的运行按钮启动时 IDE 会自己收起，用命令行 `Dora cli run`
+-- 启动时不会，就会只有声音没有画面。这里照 Dora 自带 Script/Dev/Entry.yue 启动导入工具时的做法收起 IDE；
+-- 在 Windows 上按 Ctrl+Shift+H 可以切回 IDE。
+if (App.platform == "Windows" or App.platform == "macOS") and App.webIDEEnabled then
+  emit("AppWebView", "/ide/hide", false)
+end

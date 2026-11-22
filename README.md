@@ -21,7 +21,7 @@
 |---|---|
 | Windows 10/11（64 位） | 下载 `YongchangWatch-<版本>-win64.zip`，解压后双击 `YongchangWatch.exe`，不用安装〔C7〕〔M1〕 |
 | 装了 LÖVE 11.5 的电脑 | 在仓库目录运行 `love .`，或运行 `YongchangWatch-<版本>.love`〔C5〕 |
-| Dora SSR 1.10（Dora 平台兼容版本） | 运行仓库根目录的 `init.lua`：先打开 Dora，再执行 `Dora --asset <Dora 资源目录> cli run -p <仓库目录>`（或解压 `YongchangWatch-<版本>-dora.zip` 后对解压出的目录执行同一命令）。`<Dora 资源目录>` 是含 `Script/Dev/cli.lua` 的目录，Windows 版就是 `Dora.exe` 所在的文件夹。`init.lua` 用 `LoveNode("main.lua")` 加载同一份 LÖVE 项目，并用 2D 摄像机等比适配屏幕。已在 Dora SSR 1.10.2 Linux 版上实际运行〔C18〕；Windows 版待确认〔M2〕 |
+| Dora SSR 1.10（Dora 平台兼容版本） | 运行仓库根目录的 `init.lua`：先打开 Dora，再执行 `Dora --asset <Dora 资源目录> cli run -p <仓库目录>`（或解压 `YongchangWatch-<版本>-dora.zip` 后对解压出的目录执行同一命令）。`<Dora 资源目录>` 是含 `Script/Dev/cli.lua` 的目录，Windows 版就是 `Dora.exe` 所在的文件夹。`init.lua` 用 `LoveNode("main.lua")` 加载同一份 LÖVE 项目，并用 2D 摄像机等比适配屏幕。Windows 和 macOS 版 Dora 启动后显示内置 IDE，IDE 盖着时游戏不绘制，`init.lua` 启动时会把 IDE 收起〔C6〕；如果仍然只看到 IDE，在 Dora 窗口里按 Ctrl+Shift+H 切到游戏画面。已在 Dora SSR 1.10.2 Linux 版上实际运行〔C18〕；Windows 版待确认〔M2〕 |
 
 操作：鼠标照亮与点击；`1` `2` `3` 切换弓手、鸟铳、烽火；`F` 孔明灯；空格暂停；`Esc` 菜单（可返回标题或退出游戏）〔C8〕；`M` 静音。
 
@@ -30,6 +30,7 @@
 - 入口：根目录 `init.lua`（只用 Dora 接口）→ `LoveNode("main.lua")` → 根目录 `main.lua`、`conf.lua`、`src/`（只用 `love.*` 接口）。依赖：无，字体和音效都在 `assets/` 里。
 - 实机检查：`tools/check_dora_runtime.sh` 在 Dora SSR 1.10.2 Linux 版里运行 `init.lua`，用真实的鼠标键盘事件从标题点进第一夜、走完三步教学、用菜单返回和退出，并核对 Dora 日志没有报错〔C18〕。
 - Dora 的 LoveNode 把鼠标点击作为触摸回调送给游戏，游戏同时接鼠标和触摸回调，同一次点击只处理一次（`src/input.lua`，端到端测试覆盖）〔C5〕。在 Dora 里运行时底部有一条开发工具栏，`init.lua` 把游戏画面放在它上方。
+- Windows 和 macOS 版 Dora 启动后显示内置 Web IDE；IDE 盖着窗口时，引擎照常运行逻辑和声音，但不绘制画面（Dora 1.10.2 源码 `Director::doRender`）。从 IDE 的运行按钮启动时 IDE 会自己收起，用命令行 `cli run` 启动时不会，于是只有声音没有画面。`init.lua` 照 Dora 自带脚本的做法发出 `AppWebView /ide/hide` 收起 IDE；在 Windows 上按 Ctrl+Shift+H 可以在 IDE 和游戏之间切换〔C6〕。
 - Dora 的 LoveNode 用 Lua 5.5 运行 LÖVE 代码。游戏代码不用 LuaJIT 专有功能、不用物理和自定义着色器，单元测试在 LuaJIT 和 Lua 5.5 下都通过〔C6〕。
 - 字体转成了 TrueType 轮廓，覆盖游戏里的全部文字〔C3〕。
 

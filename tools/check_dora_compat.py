@@ -5,7 +5,8 @@
    原生模块，也不得引用 Dora 接口（Dora、LoveNode、Director、Content……）。
 2. 不用 Dora 明确不开放或未完整支持的 LÖVE 接口：love.window 的关闭/移动/最小化/最大化/恢复/
    attention/icon/message box、love.physics、love.joystick 震动、自定义着色器、多层/mipmap Canvas。
-3. init.lua（Dora 入口）只用 Dora 接口，不用 love.*，并且用 LoveNode 加载根目录 main.lua。
+3. init.lua（Dora 入口）只用 Dora 接口，不用 love.*，用 LoveNode 加载根目录 main.lua，
+   并在 Windows/macOS 版 Dora 里收起内置 IDE（IDE 盖着时引擎不绘制，命令行启动只有声音没有画面）。
 4. 所有 .lua 都能被 Lua 5.5 编译（需要 Lua 5.5；路径由 tools/get_lua55.sh 给出）。
 用法：python3 tools/check_dora_compat.py [lua5.5 路径]
 """
@@ -64,6 +65,9 @@ def main():
             problems.append("init.lua 里用了 love.*（Dora 入口只能用 Dora 接口）")
         if not re.search(r'LoveNode\(\s*"main\.lua"\s*\)', code):
             problems.append('init.lua 没有用 LoveNode("main.lua") 加载根目录的 LÖVE 项目')
+        # Windows/macOS 版 Dora 的内置 IDE 盖住窗口时不绘制；命令行启动要自己收起 IDE（见 init.lua 注释）
+        if not re.search(r'App\.platform\s*==\s*"Windows"[^\n]*App\.webIDEEnabled[^\n]*\n\s*emit\(\s*"AppWebView"\s*,\s*"/ide/hide"', code):
+            problems.append('init.lua 没有在 Windows/macOS 的 Dora 里收起内置 IDE（emit("AppWebView", "/ide/hide")）')
     conf = open(os.path.join(ROOT, "conf.lua"), encoding="utf-8").read()
     if not re.search(r't\.version\s*=\s*"11\.5"', conf):
         problems.append('conf.lua 没有声明 t.version = "11.5"')
