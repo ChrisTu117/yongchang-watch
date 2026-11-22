@@ -54,6 +54,7 @@ bash tools/check_all.sh
 - `docs/中文说明.md`：代码结构与关键实现的中文讲解
 - `docs/devlog/`：开发者日志〔C13〕
 - `docs/文化资料与出处.md`：史实出处
+- `docs/B站发布稿.md`：演示视频的 B 站标题、简介和标签。视频由 `tools/record_demo.sh` 录制（画面逐帧截自游戏，声音是游戏自带的音效和音乐），`tools/check_demo_video.py` 验收时长、声音和三夜是否守住〔M3〕
 - `ASSETS.md`：素材清单与授权
 
 开发从 2026-11-21 主题公布后开始，提交历史见 git log〔C15〕。

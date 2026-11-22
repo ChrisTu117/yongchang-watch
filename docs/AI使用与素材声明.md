@@ -24,6 +24,7 @@
 | 音效、音乐 | `assets/sfx/` | 由 AI 编写的合成脚本生成（不是 AI 音频模型生成），可重现〔C2〕 |
 | 剧情与文化说明文字 | `src/data/story.lua` | AI 依据赛事提供的资料改写，出处见 `docs/文化资料与出处.md`〔C11〕 |
 | 文档 | `README.md`、`docs/` | AI 起草 |
+| 演示视频 | `tools/record_demo.sh`、`tools/demo/`、`tools/mix_demo_audio.py` | 录制脚本和字幕文字由 AI 编写。画面是游戏运行时逐帧截下的，声音是游戏自带的音效和音乐按播放时间混成的，没有 AI 生成的画面或声音 |
 
 ## 人工修改与把关
 
@@ -42,5 +43,6 @@
 | 素材 | 来源 | 许可 | 使用范围 | 修改 |
 |---|---|---|---|---|
 | Noto Serif CJK SC Bold | https://github.com/notofonts/noto-cjk ，© 2017-2024 Adobe | SIL Open Font License 1.1 | 游戏内全部文字 | 子集化、轮廓转 TrueType、改字体名〔C3〕 |
+| Noto Sans CJK SC Regular | 同上 | SIL Open Font License 1.1 | 只用于演示视频的字幕，不在游戏里 | 无 |
 
 除此以外没有使用第三方图片、音频、代码库或模板〔C4〕。赛事提供的文化资料只作文字参考，没有放进作品。
