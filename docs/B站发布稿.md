@@ -16,7 +16,7 @@
 
 - 制作：队伍“什么都不会”（ChrisTu117）
 - 引擎：LÖVE 11.5；同一份代码也能在 Dora SSR 1.10 中运行
-- 源码：https://github.com/ChrisTu117/yongchang-watch
+- 源码：https://atomgit.com/ChrisTu117/yongchang-watch （GitHub 同步：https://github.com/ChrisTu117/yongchang-watch ）
 - 授权：代码 AGPL-3.0；音乐、音效由团队原创，CC BY 4.0；字体为 Noto Serif CJK（SIL OFL 1.1）
 
 视频的画面和声音全部来自游戏本身，字幕是后期加的。开发中使用了 AI 辅助，详见仓库里的《AI 使用与素材声明》。
