@@ -1,3 +1,3 @@
 -- SPDX-License-Identifier: AGPL-3.0-only
-local VERSION = "0.1.0"
+local VERSION = "1.0.0"
 return VERSION
