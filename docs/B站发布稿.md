@@ -1,5 +1,7 @@
 # B 站发布稿（演示视频）
 
+**已发布**：2026-11-27 https://www.bilibili.com/video/BV1ap1tzcEEo （用户要求由 AI 在内置浏览器里操作上传）。实际填写和下面略有不同：B 站标签框不收带空格的标签，带空格的「2026 开源游戏开发大赛」是选同名话题加上的，同时另加了不带空格的标签；“自制”在这版投稿页里没有单独选项，创作声明是单选，选了“含AI生成内容”；分区只有“游戏”；封面上传 `cover.png`，4:3 用裁切、16:9 用原图。
+
 视频文件：`build/demo/YongchangWatch-demo.mp4`，由 `tools/record_demo.sh` 生成。时长、声音和画面的验收结果见 `build/reports/demo-result.txt`。封面用 `docs/screenshots/cover.png`（1280×720）。
 
 ## 标题
